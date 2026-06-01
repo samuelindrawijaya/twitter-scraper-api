@@ -72,6 +72,8 @@ class ScraperController:
             if request.debug_raw_sample:
                 self._save_debug_raw_sample(job_id, raw_results)
             rows = self.normalizer.normalize_many(raw_results)
+            if not rows:
+                raise ValueError("No tweets were collected for the generated queries")
             output_file = self.csv_exporter.save(rows, request.output_name)
             self.jobs.set_completed(job_id, output_file=output_file, total_rows=len(rows))
         except Exception as exc:
