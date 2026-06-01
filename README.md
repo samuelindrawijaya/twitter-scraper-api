@@ -151,6 +151,6 @@ curl -X POST "http://localhost:8000/api/scrape/preview-query" \
 
 ## Notes
 
-- Jobs are stored in memory for this MVP. Restarting the server clears job status.
+- Jobs are stored in `output/jobs.sqlite3` so status lookups can work across worker processes on the same deployed instance.
 - Output CSV files are written to `output/` by default using UTF-8 BOM for spreadsheet compatibility.
 - The CSV columns are fixed by design for downstream research workflows.
