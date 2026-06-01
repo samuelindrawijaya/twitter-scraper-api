@@ -2,16 +2,24 @@
 
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import BaseModel
 from twscrape import API, AccountsPool
 
 from app.config.settings import settings
 
-router = APIRouter(prefix="/api/auth", tags=["auth"])
-
 DB_FILE = "accounts.db"
 REQUIRED_COOKIES = {"auth_token", "ct0"}
+
+
+def verify_api_key(x_api_key: Optional[str] = Header(default=None, alias="X-API-Key")) -> None:
+    if not settings.REQUIRE_API_KEY:
+        return
+    if not settings.API_KEY or x_api_key != settings.API_KEY:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or missing API key")
+
+
+router = APIRouter(prefix="/api/auth", tags=["auth"], dependencies=[Depends(verify_api_key)])
 
 
 # ---------- Schemas ----------
