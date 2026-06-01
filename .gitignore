@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+twitter_cookie.json
+accounts.db
+
+# Runtime output
+output/
+*.log
+
+# Tooling/editor noise
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.DS_Store
